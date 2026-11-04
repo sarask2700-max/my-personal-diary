@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf4f1">
+  <title>My Diary ♡</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#e8a6b7">
+
+<body data-theme="rose">
+
+  <header class="header">
+    <p class="eyebrow">YOUR PRIVATE SPACE</p>
+    <h1>My Diary <span>♡</span></h1>
+    <p id="todayDate"></p>
+    <p class="welcome">A little space for your thoughts and memories.</p>
+  </header>
+
+  <main>
+
+    <!-- THEME SELECTOR -->
+    <section class="card">
+      <div class="section-heading">
+        <h2>Choose Your Theme</h2>
+        <span>✧</span>
+      </div>
+
+      <div class="theme-options">
+        <button class="theme-choice" data-theme-choice="rose">
+          <span class="theme-dot rose-dot"></span>
+          Rose Blush
+        </button>
+
+        <button class="theme-choice" data-theme-choice="sage">
+          <span class="theme-dot sage-dot"></span>
+          Sage Garden
+        </button>
+
+        <button class="theme-choice" data-theme-choice="lavender">
+          <span class="theme-dot lavender-dot"></span>
+          Lavender Dream
+        </button>
+
+        <button class="theme-choice" data-theme-choice="midnight">
+          <span class="theme-dot midnight-dot"></span>
+          Midnight
+        </button>
+      </div>
+
+      <p id="themeMessage"></p>
+    </section>
+
+    <!-- CALENDAR -->
+    <section class="card">
+      <div class="section-heading">
+        <h2>My Calendar</h2>
+        <span>♡</span>
+      </div>
+
+      <div class="calendar-navigation">
+        <button id="prevMonth" type="button">‹</button>
+        <h3 id="calendarMonth"></h3>
+        <button id="nextMonth" type="button">›</button>
+      </div>
+
+      <div id="calendarGrid" class="calendar-grid"></div>
+
+      <p class="calendar-hint">♥ Days with saved memories</p>
+
+      <button id="clearDateFilter" class="secondary-btn" type="button">
+        Show All Memories
+      </button>
+
+      <p id="selectedDateMessage"></p>
+    </section>
+
+    <!-- JOURNAL FORM -->
+    <section class="card">
+      <div class="section-heading">
+        <h2>Today's Journal</h2>
+        <span>✧</span>
+      </div>
+
+      <label for="entryDate">Date</label>
+      <input type="date" id="entryDate">
+
+      <label for="entryTitle">Title</label>
+      <input
+        type="text"
+        id="entryTitle"
+        placeholder="Give today a title..."
+      >
+
+      <label for="entryMood">How are you feeling?</label>
+      <select id="entryMood">
+        <option value="Happy">😊 Happy</option>
+        <option value="Calm">😌 Calm</option>
+        <option value="Excited">🥰 Excited</option>
+        <option value="Grateful">💕 Grateful</option>
+        <option value="Sad">😔 Sad</option>
+        <option value="Anxious">😟 Anxious</option>
+        <option value="Angry">😠 Angry</option>
+        <option value="Tired">😴 Tired</option>
+      </select>
+
+      <label for="entryText">Dear Diary...</label>
+      <textarea
+        id="entryText"
+        placeholder="Write whatever is on your mind. This is your space..."
+      ></textarea>
+
+      <!-- VOICE RECORDING -->
+      <div class="voice-recorder">
+        <h3>Voice Memories 🎙️</h3>
+        <p class="small-message">
+          Capture your thoughts in your own voice.
+        </p>
+
+        <label class="check-label" for="attachVoice">
+          <input type="checkbox" id="attachVoice" checked>
+          Attach recording to this diary entry
+        </label>
+
+        <div id="recordingTime" class="recording-time">00:00</div>
+
+        <div class="recording-controls">
+          <button id="recordBtn" class="record-btn" type="button">
+            ● Start Recording
+          </button>
+
+          <button id="pauseBtn" class="secondary-btn" type="button" disabled>
+            Pause
+          </button>
+
+          <button id="stopBtn" class="secondary-btn" type="button" disabled>
+            Stop & Save
+          </button>
+        </div>
+
+        <p id="recordingStatus" role="status"></p>
+        <p id="pendingVoiceMessage"></p>
+      </div>
+
+      <button id="saveBtn" class="primary-btn" type="button">
+        Save My Memories ♡
+      </button>
+
+      <button id="cancelBtn" class="secondary-btn hidden" type="button">
+        Cancel Editing
+      </button>
+
+      <p id="statusMessage" role="status"></p>
+    </section>
+
+    <!-- VOICE LIBRARY -->
+    <section class="card">
+      <div class="section-heading">
+        <h2>My Voice Memories</h2>
+        <span>♫</span>
+      </div>
+
+      <p class="small-message">
+        Your recordings, all in one place.
+      </p>
+
+      <div id="voiceList">
+        <p class="empty-message">Your voice memories will appear here ♡</p>
+      </div>
+    </section>
+
+    <!-- WRITTEN MEMORIES -->
+    <section class="card">
+      <div class="section-heading">
+        <h2>My Memories</h2>
+        <span>♡</span>
+      </div>
+
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Search your memories..."
+      >
+
+      <div id="entriesList">
+        <p class="empty-message">Your memories will appear here ♡</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Made with love, just for you ♡</p>
+    <p>Your little world. Your memories.</p>
+  </footer>
+
+  <!-- IMPORTANT: Keep only this one app.js reference -->
+  <script src="app.js"></script>
+  <script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker.register("./service-worker.js")
+            .then(function (registration) {
+                console.log("Diary service worker registered successfully.");
+            })
+            .catch(function (error) {
+                console.log("Service worker registration failed:", error);
+            });
+    });
+}
+</script>
+
+</body>
+</html>
